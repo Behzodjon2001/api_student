@@ -1,0 +1,28 @@
+.container .header .sort-firstname {
+    width: 90px;
+}
+
+.buttons_header {
+    display: flex;
+    gap: 20px;
+}
+
+.container .header {
+    display: flex;
+    gap: 20px;
+}
+
+@media screen and (min-width: 68px) and (max-width: 400px) {
+    .container .header {
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 247px) {
+    .buttons_header .add_teacher_header {
+        width: 120px;
+    }
+    .buttons_header {
+        flex-direction: column;
+    }
+}
