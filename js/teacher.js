@@ -45,7 +45,7 @@ const getTeacherCard = ({
         <div class="d-flex-xxl-column gap-5 justify-content-between flex-lg-column">
           <button class="btn btn-danger "onclick="deleteteacher(${id})" >Del</button>
           <button class="btn btn-primary" onclick="editteacher(${id})" data-bs-toggle="modal" data-bs-target="#teacher-modal">Edit</button>
-          <a href="../student.html" onclick="saveId(${id})" class="btn btn-primary mt-xl-0 mt-lg-2"> See products ${id}</a>
+          <a href="../student.html" onclick="saveId(${id})" class="btn btn-primary mt-xl-0 mt-lg-2"> See students ${id}</a>
         </div>
       </div>
     </div>
