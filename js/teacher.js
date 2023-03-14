@@ -123,38 +123,61 @@ function checkPhone(phone) {
 
 async function getTeachers2() {
   teachersRow.innerHTML = "...loading";
-  let res = await fetch(ENDPOINT + `teacher`, {
+  const url = new URL(ENDPOINT + `teacher`);
+  url.searchParams.append("sortBy", "firstName");
+  url.searchParams.append("order", "asc"); // order parameter is optional and will default to `asc`
+
+  let res = await fetch(url, {
     method: "GET",
+    headers: { "content-type": "application/json" },
   });
   let teachers = await res.json();
-  console.log("sdsdsdsdssdsds");
-  console.log(teachers + "sssqqqqqqq");
-  return teachers;
+  teachersRow.innerHTML = "";
+  teachers.forEach((teacher) => {
+    console.log(teacher);
+    teachersRow.innerHTML += getTeacherCard(teacher);
+  });
 }
 
-async function getTeachers3(filterPupils) {
-  // teachersRow.innerHTML = "...loading";
-  // let res = await fetch(ENDPOINT + `teacher?page=${page}&limit=${limit}`, {
-  //   method: "GET",
-  // });
-  // let teachers = await res.json();
-  // teachersRow.innerHTML = "";
-  // teachers.forEach((teacher) => {
-  //   console.log(teacher);
-  //   teachersRow.innerHTML += getTeacherCard(teacher);
-  // });
+async function getTeachers3() {
+  teachersRow.innerHTML = "...loading";
+  const url = new URL(ENDPOINT + `teacher`);
+  url.searchParams.append("sortBy", "firstName");
+  url.searchParams.append("order", "desc"); // order parameter is optional and will default to `asc`
+
+  let res = await fetch(url, {
+    method: "GET",
+    headers: { "content-type": "application/json" },
+  });
+  let teachers = await res.json();
+  teachersRow.innerHTML = "";
+  teachers.forEach((teacher) => {
+    console.log(teacher);
+    teachersRow.innerHTML += getTeacherCard(teacher);
+  });
+}
+
+async function getTeachers4(search) {
+  teachersRow.innerHTML = "...loading";
+  const url = new URL(ENDPOINT + `teacher`);
+  url.searchParams.append("isMarried", search);
+
+  let res = await fetch(url, {
+    method: "GET",
+    headers: { "content-type": "application/json" },
+  });
+  let teachers = await res.json();
+  teachersRow.innerHTML = "";
+  teachers.forEach((teacher) => {
+    console.log(teacher);
+    teachersRow.innerHTML += getTeacherCard(teacher);
+  });
 }
 
 teacherSearch.addEventListener("input", function (evt) {
   evt.preventDefault();
   let search = this.value.toLowerCase();
-  let search2 = [];
-  search2 = [getTeachers2()];
-  console.log(search2 + "eeeeeee");
-  filterPupils = search2.filter((teacher) =>
-    teacher.firstName.toLowerCase().includes(search)
-  );
-  getTeachers(filterPupils);
+  getTeachers4(search);
 });
 
 let manzils = ["ascending", "descending"];
@@ -167,10 +190,13 @@ filterManzil.addEventListener("change", function (evt) {
   evt.preventDefault();
   if (this.value == "All") {
     getTeachers();
-  } else {
-    let getTeacher = [getTeachers2()];
-    filterPupils = getTeacher.sort((firstName) => firstName);
-    getTeachers(filterPupils);
+  } else if (this.value == "descending") {
+    console.log("Hello");
+
+    getTeachers3();
+  } else if (this.value == "ascending") {
+    console.log("World");
+    getTeachers2();
   }
 });
 
